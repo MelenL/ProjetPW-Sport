@@ -1,0 +1,103 @@
+Index: Create_table.sql
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/*\nCREATE-TABLES\n\n- Listes des tables à créer pour le projet SPORT.\n*/\n\nCREATE TABLE Categorie (\n                           idCategorie INT AUTO_INCREMENT PRIMARY KEY,\n                           nomCategorie VARCHAR(255),\n                           codeRaccourci VARCHAR(10)\n);\n\n\nCREATE TABLE Licencie (\n                          idLicencie INT AUTO_INCREMENT PRIMARY KEY,\n                          numeroLicence INT UNIQUE,\n                          nom VARCHAR(255),\n                          prenom VARCHAR(255),\n                          idCategorie INT,\n                          idContact INT,\n                          FOREIGN KEY (idCategorie) REFERENCES Categorie(idCategorie),\n                          FOREIGN KEY (idContact) REFERENCES Contact(idContact)\n);\n\nCREATE TABLE Educateur (\n                           idEducateur INT AUTO_INCREMENT PRIMARY KEY,\n                           idLicencie INT,\n                           email VARCHAR(255),\n                           motDePasse VARCHAR(255),\n                           estAdministrateur BOOLEAN,\n                           FOREIGN KEY (idLicencie) REFERENCES Licencie(idLicencie)\n);\n\nCREATE TABLE Contact (\n                         idContact INT AUTO_INCREMENT PRIMARY KEY,\n                         nom VARCHAR(255),\n                         prenom VARCHAR(255),\n                         email VARCHAR(255),\n                         numeroTel VARCHAR(20)\n);\n\nCREATE TABLE MailEdu (\n                         idMailEdu INT AUTO_INCREMENT PRIMARY KEY,\n                         dateEnvoi DATE,\n                         objet VARCHAR(255),\n                         message TEXT,\n                         idEducateur INT,\n                         FOREIGN KEY (idEducateur) REFERENCES Educateur(idEducateur)\n);\n\nCREATE TABLE MailContact (\n                             idMailContact INT AUTO_INCREMENT PRIMARY KEY,\n                             dateEnvoi DATE,\n                             objet VARCHAR(255),\n                             message TEXT,\n                             idContact INT,\n                             FOREIGN KEY (idContact) REFERENCES Contact(idContact)\n);\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Create_table.sql b/Create_table.sql
+--- a/Create_table.sql	
++++ b/Create_table.sql	
+@@ -10,6 +10,13 @@
+                            codeRaccourci VARCHAR(10)
+ );
+ 
++CREATE TABLE Contact (
++                         idContact INT AUTO_INCREMENT PRIMARY KEY,
++                         nom VARCHAR(255),
++                         prenom VARCHAR(255),
++                         email VARCHAR(255),
++                         numeroTel VARCHAR(20)
++);
+ 
+ CREATE TABLE Licencie (
+                           idLicencie INT AUTO_INCREMENT PRIMARY KEY,
+@@ -31,13 +38,7 @@
+                            FOREIGN KEY (idLicencie) REFERENCES Licencie(idLicencie)
+ );
+ 
+-CREATE TABLE Contact (
+-                         idContact INT AUTO_INCREMENT PRIMARY KEY,
+-                         nom VARCHAR(255),
+-                         prenom VARCHAR(255),
+-                         email VARCHAR(255),
+-                         numeroTel VARCHAR(20)
+-);
++
+ 
+ CREATE TABLE MailEdu (
+                          idMailEdu INT AUTO_INCREMENT PRIMARY KEY,
+Index: Insertion.sql
+===================================================================
+diff --git a/Insertion.sql b/Insertion.sql
+new file mode 100644
+--- /dev/null	
++++ b/Insertion.sql	
+@@ -0,0 +1,57 @@
++/*
++INSERTION
++
++- Structure de données fictives.
++*/
++
++INSERT INTO Categorie (nomCategorie, codeRaccourci) VALUES
++                                                        ('Moins de 12 ans', 'M12'),
++                                                        ('Moins de 15 ans', 'M15'),
++                                                        ('Moins de 18 ans', 'M18'),
++                                                        ('Adultes', 'ADT');
++
++INSERT INTO Contact (nom, prenom, email, numeroTel) VALUES
++                                                        ('Dupont', 'Jean', 'jean.dupont@gmail.com', '0123456789'),
++                                                        ('Martin', 'Sophie', 'sophie.martin@gmail.com', '0234567890'),
++                                                        ('Lefevre', 'Pierre', 'pierre.lefevre@gmail.com', '0345678901'),
++                                                        ('Dubois', 'Marie', 'marie.dubois@gmail.com', '0456789012'),
++                                                        ('Leroy', 'Luc', 'luc.leroy@gmail.com', '0567890123'),
++                                                        ('Moreau', 'Julie', 'julie.moreau@gmail.com', '0678901234'),
++                                                        ('Lambert', 'Alex', 'alex.lambert@gmail.com', '0789012345'),
++                                                        ('Roux', 'Anna', 'anna.roux@gmail.com', '0890123456'),
++                                                        ('Fournier', 'Nicolas', 'nicolas.fournier@gmail.com', '0901234567'),
++                                                        ('Dumas', 'Isabelle', 'isabelle.dumas@gmail.com', '0012345678');
++
++INSERT INTO Licencie (numeroLicence, nom, prenom, idCategorie, idContact) VALUES
++                                                                              (1001, 'Dupont', 'Jean', 1, 1),
++                                                                              (1002, 'Martin', 'Sophie', 2, 2),
++                                                                              (1003, 'Lefevre', 'Pierre', 3, 3),
++                                                                              (1004, 'Dubois', 'Marie', 4, 4),
++                                                                              (1005, 'Leroy', 'Luc', 1, 5),
++                                                                              (1006, 'Moreau', 'Julie', 2, 6),
++                                                                              (1007, 'Lambert', 'Alex', 3, 7),
++                                                                              (1008, 'Roux', 'Anna', 4, 8),
++                                                                              (1009, 'Fournier', 'Nicolas', 1, 9),
++                                                                              (1010, 'Dumas', 'Isabelle', 2, 10);
++
++INSERT INTO Educateur (idLicencie, email, motDePasse, estAdministrateur) VALUES
++                                                                             (1, 'jean.d@gmail.com', 'password123', 1),
++                                                                             (2, 'sophie.m@gmail.com', 'pass456', 0),
++                                                                             (3, 'pierre.l@gmail.com', 'secret789', 0),
++                                                                             (4, 'marie.d@gmail.com', 'adminPass', 1),
++                                                                             (5, 'luc.l@gmail.com', 'test123', 0);
++
++
++INSERT INTO MailEdu (dateEnvoi, objet, message, idEducateur) VALUES
++                                                                 ('2023-12-01', 'Réunion d"équipe', 'Bonjour à tous, la réunion aura lieu demain à 15h.', 1),
++                                                                 ('2023-12-02', 'Entraînement annulé', 'Entraînement annulé en raison des conditions météorologiques.', 4),
++                                                                 ('2023-12-03', 'Nouvelle saison', 'Bienvenue à la nouvelle saison de sport! Prêts pour de nouvelles victoires?', 2),
++                                                                 ('2023-12-04', 'Réunion urgente', 'Une réunion urgente est prévue ce soir à 18h. Soyez tous présents.', 1),
++                                                                 ('2023-12-05', 'Championnat à venir', 'Préparez-vous pour le prochain championnat. Entraînements supplémentaires cette semaine.', 3);
++
++INSERT INTO MailContact (dateEnvoi, objet, message, idContact) VALUES
++                                                                   ('2023-12-01', 'Informations importantes', 'Voici quelques informations importantes pour la saison à venir.', 1),
++                                                                   ('2023-12-02', 'Inscription confirmée', 'L"inscription de votre enfant a été confirmée. Bienvenue dans l"équipe!', 2),
++                                                                   ('2023-12-03', 'Entraînement spécial', 'Entraînement spécial prévu ce week-end. Soyez prêts!', 3),
++                                                                   ('2023-12-04', 'Remise des prix', 'La remise des prix aura lieu le mois prochain. Réservez la date.', 4),
++                                                                   ('2023-12-05', 'Recrutement de bénévoles', 'Nous avons besoin de bénévoles pour aider lors des événements à venir. Volontaires bienvenus!', 5);
