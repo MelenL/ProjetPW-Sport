@@ -1,2 +1,5 @@
-# ProjetPW-Sport
-Projet PW - PHP &amp; Symfony
+# ProjetPW-Sport - Partie Frontend
+
+## Partie Frontend du projet de site
+
+ - Fait avec Symfony.
