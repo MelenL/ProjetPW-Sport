@@ -1,0 +1,10 @@
+{% block body %}
+    <h1>Bienvenue sur le site du club sportif</h1>
+    <h2>Liste des licenciés :</h2>
+    <ul>
+        {% for licencie in licencies %}
+            <li>{{ licencie.nom }} {{ licencie.prenom }} - {{ licencie.numeroLicence }}</li>
+        {% endfor %}
+    </ul>
+    {# Ajoute ici le contenu supplémentaire de la page d'accueil #}
+{% endblock %}
