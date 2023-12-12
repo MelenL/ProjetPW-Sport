@@ -7,17 +7,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\LicencieRepository;
+use App\Repository\CategorieRepository;
+use App\Repository\EducateurRepository;
 
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(LicencieRepository $licencieRepository): Response
+    public function index(LicencieRepository $licencieRepository, CategorieRepository $categorieRepository, EducateurRepository $educateurRepository): Response
     {
-        $licencies = $licencieRepository->findAll();
+        $NombreLicencies = $licencieRepository->count([]);
+        $NombreEducateurs = $educateurRepository->count([]);
+        $NombreCategories= $categorieRepository->count([]);
 
 
         return $this->render('home/index.html.twig', [
-            'licencies' => $licencies,
+            'NombreLicencies' => $NombreLicencies,
+            'NombreEducateurs' => $NombreEducateurs,
+            'NombreCategories' => $NombreCategories
         ]);
     }
 }
