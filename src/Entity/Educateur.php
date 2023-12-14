@@ -6,27 +6,37 @@ use App\Repository\EducateurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: EducateurRepository::class)]
-class Educateur
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+class Educateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(inversedBy: 'educateur', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Licencie $idLicencie = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $motDePasse = null;
+    #[ORM\Column]
+    private array $roles = [];
+
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: 'licencie_id', referencedColumnName: 'id', nullable: false)]
+    private ?Licencie $idLicencie = null;
 
     #[ORM\Column]
-    private ?bool $estAdministrateur = null;
+    private ?bool $estAdmin = null;
 
     #[ORM\OneToMany(mappedBy: 'idEducateur', targetEntity: MailEdu::class, orphanRemoval: true)]
     private Collection $mailEdus;
@@ -41,18 +51,6 @@ class Educateur
         return $this->id;
     }
 
-    public function getIdLicencie(): ?Licencie
-    {
-        return $this->idLicencie;
-    }
-
-    public function setIdLicencie(Licencie $idLicencie): static
-    {
-        $this->idLicencie = $idLicencie;
-
-        return $this;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -65,26 +63,79 @@ class Educateur
         return $this;
     }
 
-    public function getMotDePasse(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
     {
-        return $this->motDePasse;
+        return (string) $this->email;
     }
 
-    public function setMotDePasse(string $motDePasse): static
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        $this->motDePasse = $motDePasse;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
 
         return $this;
     }
 
-    public function isEstAdministrateur(): ?bool
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
     {
-        return $this->estAdministrateur;
+        return $this->password;
     }
 
-    public function setEstAdministrateur(bool $estAdministrateur): static
+    public function setPassword(string $password): static
     {
-        $this->estAdministrateur = $estAdministrateur;
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    public function getLicencie(): ?Licencie
+    {
+        return $this->idLicencie;
+    }
+
+    public function setLicencie(Licencie $Licencie): static
+    {
+        $this->idLicencie = $Licencie;
+
+        return $this;
+    }
+
+    public function isEstAdmin(): ?bool
+    {
+        return $this->estAdmin;
+    }
+
+    public function setEstAdmin(bool $estAdmin): static
+    {
+        $this->estAdmin = $estAdmin;
 
         return $this;
     }

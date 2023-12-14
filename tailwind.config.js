@@ -11,6 +11,10 @@ module.exports = {
         'section2': "url('/public/home/section2/leCoach.png')",
         'section21': "url('/public/home/section2/bg1.png')",
         'section22': "url('/public/home/section2/bg2.png')",
+        'login': "url('/public/login/bglogin.png')",
+        'login2': "url('/public/login/bglogin2.png')",
+        'login3': "url('/public/login/bglogin3.png')",
+        'login4': "url('/public/login/bglogin4.png')",
       },
       colors: {
         primary: {"50":"#fef2f2","100":"#fee2e2","200":"#fecaca","300":"#fca5a5","400":"#f87171","500":"#ef4444","600":"#dc2626","700":"#b91c1c","800":"#991b1b","900":"#7f1d1d","950":"#450a0a"}

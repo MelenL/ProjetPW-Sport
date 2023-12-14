@@ -7,3 +7,11 @@ controllers:
 home:
     path: /
     controller: App\Controller\HomeController::index
+
+app_login:
+    path: /login
+    controller: 'App\Controller\SecurityController::login'
+
+app_licencies:
+    path: /licencies
+    controller: 'App\Controller\LicensingController::index'

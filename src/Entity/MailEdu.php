@@ -15,7 +15,7 @@ class MailEdu
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dateEnvoi = null;
+    private ?\DateTimeInterface $dateEnvoie = null;
 
     #[ORM\Column(length: 255)]
     private ?string $objet = null;
@@ -32,14 +32,14 @@ class MailEdu
         return $this->id;
     }
 
-    public function getDateEnvoi(): ?\DateTimeInterface
+    public function getDateEnvoie(): ?\DateTimeInterface
     {
-        return $this->dateEnvoi;
+        return $this->dateEnvoie;
     }
 
-    public function setDateEnvoi(\DateTimeInterface $dateEnvoi): static
+    public function setDateEnvoie(\DateTimeInterface $dateEnvoie): static
     {
-        $this->dateEnvoi = $dateEnvoi;
+        $this->dateEnvoie = $dateEnvoie;
 
         return $this;
     }
