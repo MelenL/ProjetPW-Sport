@@ -1,122 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}MonCoach{% endblock %}
+{% block title %}LeCoach{% endblock %}
 
-{% block body %}
-
-{% if is_granted('ROLE_USER') %}
-    {% block headerConnected %}
-        <header>
-            <nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
-                <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                    <a href="{{ path('home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
-                        <span class="animate-fade-right hover:animate-pulse animate-once animate-ease-linear animate-normal animate-fill-forwards font-gasoek text-3xl text-transparent bg-clip-text bg-gradient-to-r to-yellow-200 from-red-400">LeCoach</span>
-                    </a>
-                    <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+{% block content %}
 
 
-                        <div class="relative cursor-pointer" id="avatarButton" type="button" data-dropdown-toggle="userDropdown">
-                            <img class="w-10 h-10 rounded-full" src="{{ asset('avatar/avatar2.png') }}" alt="">
-                            <span class="top-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
-                        </div>
-
-                        <!-- Dropdown menu -->
-                        <div id="userDropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-                            <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                                <div class="font-gasoek truncate">{{ app.user.licencie.prenom }}</div>
-                                <div class="font-gasoek truncate">{{ app.user.licencie.nom }}</div>
-                            </div>
-                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
-                                <li>
-                                    <a href="#" class="flex items-center px-4 py-2 font-regular hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 19">
-                                            <path d="M14.5 0A3.987 3.987 0 0 0 11 2.1a4.977 4.977 0 0 1 3.9 5.858A3.989 3.989 0 0 0 14.5 0ZM9 13h2a4 4 0 0 1 4 4v2H5v-2a4 4 0 0 1 4-4Z"/>
-                                            <path d="M5 19h10v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2ZM5 7a5.008 5.008 0 0 1 4-4.9 3.988 3.988 0 1 0-3.9 5.859A4.974 4.974 0 0 1 5 7Zm5 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm5-1h-.424a5.016 5.016 0 0 1-1.942 2.232A6.007 6.007 0 0 1 17 17h2a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5ZM5.424 9H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h2a6.007 6.007 0 0 1 4.366-5.768A5.016 5.016 0 0 1 5.424 9Z"/>
-                                        </svg>
-                                        <span class="ml-2">Licenciés</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="flex items-center px-4 py-2 font-regular hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 19 18">
-                                            <path d="M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z"/>
-                                        </svg>
-                                        <span class="ml-2">Contacts</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="flex items-center px-4 py-2 font-regular hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z"/>
-                                        </svg>
-                                        <span class="ml-2">Boite Mail</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="py-1">
-                                <a href="{{ path('app_logout') }}" class="font-gasoek text-red-500 block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Deconnexion</a>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-                        <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                            <li>
-                                <a href="#" class="font-gasoek2 block text-xl py-2 px-3  rounded md:bg-transparent font-bold text-red-500 md:p-0 md:dark:text-blue-500" aria-current="page">Accueil</a>
-                            </li>
-                            <li>
-                                <a href="#" class="font-gasoek2 block text-xl py-2 px-3  rounded hover:text-red-500 ease-in duration-150 md:p-0">Nos categories</a>
-                            </li>
-                            <li>
-                                <a href="#" class="font-gasoek2 block text-xl py-2 px-3 rounded hover:text-red-500 ease-in duration-150 md:p-0">Nos Educateurs</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
-
-    {% endblock %}
-{% else %}
-    {% block header %}
-
-        <header>
-            <nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
-                <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                    <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
-                        <span class="animate-fade-right hover:animate-pulse animate-once animate-ease-linear animate-normal animate-fill-forwards font-gasoek text-3xl text-transparent bg-clip-text bg-gradient-to-r to-yellow-200 from-red-400">LeCoach</span>
-                    </a>
-                    <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                        <a href="{{ path('app_login') }}">
-                            <button type="button" class="font-gasoek text-white bg-yellow-300 hover:bg-red-500 ease-in duration-200 focus:ring-4 focus:outline-none focus:ring-yellow-400 rounded-lg text-sm px-4 py-2 text-center">Éducateur</button>
-                        </a>
-                        <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
-                            <span class="sr-only">Open main menu</span>
-                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-                        <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                            <li>
-                                <a href="#" class="font-gasoek2 block text-xl py-2 px-3  rounded md:bg-transparent font-bold text-red-500 md:p-0 md:dark:text-blue-500" aria-current="page">Accueil</a>
-                            </li>
-                            <li>
-                                <a href="#" class="font-gasoek2 block text-xl py-2 px-3  rounded hover:text-red-500 ease-in duration-150 md:p-0">Nos categories</a>
-                            </li>
-                            <li>
-                                <a href="#" class="font-gasoek2 block text-xl py-2 px-3 rounded hover:text-red-500 ease-in duration-150 md:p-0">Nos Educateurs</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
-
-    {% endblock %}
-{% endif %}
 
 {% block section1 %}
     <br>
@@ -266,27 +154,6 @@
     <br>
 {% endblock %}
 
-{% block footer %}
-    <footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 dark:border-gray-600">
-    <span class="text-sm text-gray-900   font-gasoek sm:text-center dark:text-gray-400">© 2023 <a href="{{ path('home') }}" class="hover:underline">LeCoach™</a>. <span class="font-regular font-bold">  Tout droits résérvés.
-        </span></span>
-        <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
-            <li>
-                <a href="{{ path('home') }}" class="font-regular me-4 md:me-6 hover:text-gray-900 ease-in duration-200 font-bold">Acceuil</a>
-            </li>
-            {% if is_granted('ROLE_USER') %}
-                {% if app.user.estAdmin == true %}
-                    <li>
-                        <a href="#" class="font-regular me-4 md:me-6 hover:text-gray-900 ease-in duration-200 font-bold">Admin</a>
-                    </li>
-                {% endif %}
-            {% endif %}
-            <li>
-                <a href="https://github.com/MelenL/ProjetPW-Sport" class="font-regular hover:text-gray-900 ease-in duration-200 font-bold">GitHub</a>
-            </li>
-        </ul>
-    </footer>
 
-{% endblock %}
 
 {% endblock %}

@@ -15,6 +15,17 @@ module.exports = {
         'login2': "url('/public/login/bglogin2.png')",
         'login3': "url('/public/login/bglogin3.png')",
         'login4': "url('/public/login/bglogin4.png')",
+        'table': "url('/public/bgtable.png')",
+        'table2': "url('/public/bgtable2.png')",
+        'table3': "url('/public/bgtable3.png')",
+        'table4': "url('/public/bgtable4.png')",
+        'table5': "url('/public/bgtable5.png')",
+        'table6': "url('/public/bgtable6.png')",
+        'table7': "url('/public/bgtable7.png')",
+        'table8': "url('/public/bgtable8.png')",
+        'table9': "url('/public/bgtable9.png')",
+        'table10': "url('/public/bgtable10.png')",
+        'table11': "url('/public/bgtable11.png')",
       },
       colors: {
         primary: {"50":"#fef2f2","100":"#fee2e2","200":"#fecaca","300":"#fca5a5","400":"#f87171","500":"#ef4444","600":"#dc2626","700":"#b91c1c","800":"#991b1b","900":"#7f1d1d","950":"#450a0a"}

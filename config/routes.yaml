@@ -14,4 +14,4 @@ app_login:
 
 app_licencies:
     path: /licencies
-    controller: 'App\Controller\LicensingController::index'
+    controller: 'App\Controller\LicenciesController::index'
