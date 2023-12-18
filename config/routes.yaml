@@ -15,3 +15,11 @@ app_login:
 app_licencies:
     path: /licencies
     controller: 'App\Controller\LicenciesController::index'
+
+app_contacts:
+    path: /contacts
+    controller: 'App\Controller\ContactsController::index'
+
+app_mails:
+    path: /mails
+    controller: 'App\Controller\MailsController::index'

@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Licenciés{% endblock %}
+{% block title %}LeCoach | Licenciés{% endblock %}
 
 {% block content %}
 
     {% block tableLicencies %}
-    <body class="bg-table4 bg-cover">
+    <div class="bg-table4 bg-cover">
         <br>
         <br>
         <br>
         <br>
         <section class=" animate-ease-in animate-fill-forwards bg-yellow-300 shadow-md sm:rounded-lg p-10 flex items-center justify-center mx-64">
-            <div class="w-full">
+            <divé class="w-full">
                 <h1 class="font-gasoek text-5xl text-white items-center text-center justify-center">Listes des <mark class="text-yellow-300 px-3 py-2 rounded-lg bg-white">Licenciés</mark></h1>
                 <br>
                 <br>
@@ -37,10 +37,6 @@
                             </div>
                             <div>
                                 <mark class="px-2 py-2 text-xl font-gasoek text-white bg-gray-900 rounded">{{ selectedCategory.codeRaccourci }}</mark>
-                            </div>
-                        {% else %}
-                            <div>
-                                <mark class="px-2 py-2 text-xl font-gasoek text-white bg-red-500 rounded">Aucune sélection</mark>
                             </div>
                         {% endif %}
 
@@ -122,7 +118,7 @@
                     </table>
 
                 </div>
-            </div>
+            </divé>
 
         </section>
         <br>
@@ -174,7 +170,7 @@
                 });
             });
         </script>
-    </body>
+    </div>
     {% endblock %}
 
 
