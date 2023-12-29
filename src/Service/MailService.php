@@ -51,6 +51,11 @@ class MailService extends AbstractController
         $mailsContact = $this->mailContactRepository->findAll();
         $mailsEdu = $this->mailEduRepository->findAll();
 
+        // Récupérer les mails envoyés
+        $contactId = $user->getLicencie()->getIdContact();
+        $mailsContactEnvoyes = $this->mailContactRepository->findBy(['idContact' => $contactId]);
+        $mailsEduEnvoyes = $this->mailEduRepository->findBy(['idEducateur' => $user->getId()]);
+
         // Filtrer et trier les mailsContact et mailsEdu
         $mailsContactTrie = $this->filtrerMailsContact($mailsContact, $user);
         $mailsEduTrie = $this->filtrerMailsEdu($mailsEdu, $user);
@@ -67,6 +72,8 @@ class MailService extends AbstractController
             'mailsEdu_noms' => $mailsEdu_noms,
             'mailsContactTrie' => $mailsContactTrie,
             'mailsEduTrie' => $mailsEduTrie,
+            'mailsContactEnvoyes' => $mailsContactEnvoyes,
+            'mailsEduEnvoyes' => $mailsEduEnvoyes
         ];
     }
 

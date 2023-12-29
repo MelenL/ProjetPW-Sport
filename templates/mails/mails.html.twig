@@ -15,16 +15,24 @@
                 <div class="search-table w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 md:rounded-lg">
                         <div class="flex flex-col items-center justify-between p-4 space-y-3 md:flex-row md:space-y-0 md:space-x-4">
-                            <a href="{{ path('app_new') }}">
-                                <button type="button"
-                                        class="flex items-center justify-center w-full px-4 py-2 text-sm font-gasoek text-white rounded-lg md:w-auto bg-violet-700 hover:bg-violet-800 ease-in duration-100 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
-                                    <svg class="h-3.5 w-3.5 mr-2 -ml-1" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                         aria-hidden="true">
-                                        <path d="M20.168 6.136 14.325.293a1 1 0 0 0-1.414 0l-1.445 1.444a1 1 0 0 0 0 1.414l5.844 5.843a1 1 0 0 0 1.414 0l1.444-1.444a1 1 0 0 0 0-1.414Zm-4.205 2.927L11.4 4.5a1 1 0 0 0-1-.25L4.944 5.9a1 1 0 0 0-.652.624L.518 17.206a1 1 0 0 0 .236 1.04l.023.023 6.606-6.606a2.616 2.616 0 1 1 3.65 1.304 2.615 2.615 0 0 1-2.233.108l-6.61 6.609.024.023a1 1 0 0 0 1.04.236l10.682-3.773a1 1 0 0 0 .624-.653l1.653-5.457a.999.999 0 0 0-.25-.997Z"/>     <path d="M10.233 11.1a.613.613 0 1 0-.867-.868.613.613 0 0 0 .867.868Z"/>
-                                    </svg>
-                                    Rédiger
-                                </button>
-                            </a>
+
+                            <div class="flex items-center">
+                                <a href="{{ path('app_new') }}" style="margin-right: 20px;">
+                                    <button type="button"
+                                            class="flex items-center justify-center w-full px-4 py-2 text-sm font-gasoek text-white rounded-lg md:w-auto bg-violet-700 hover:bg-violet-800 ease-in duration-100 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                                        <svg class="h-3.5 w-3.5 mr-2 -ml-1" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                             aria-hidden="true">
+                                            <path d="M20.168 6.136 14.325.293a1 1 0 0 0-1.414 0l-1.445 1.444a1 1 0 0 0 0 1.414l5.844 5.843a1 1 0 0 0 1.414 0l1.444-1.444a1 1 0 0 0 0-1.414Zm-4.205 2.927L11.4 4.5a1 1 0 0 0-1-.25L4.944 5.9a1 1 0 0 0-.652.624L.518 17.206a1 1 0 0 0 .236 1.04l.023.023 6.606-6.606a2.616 2.616 0 1 1 3.65 1.304 2.615 2.615 0 0 1-2.233.108l-6.61 6.609.024.023a1 1 0 0 0 1.04.236l10.682-3.773a1 1 0 0 0 .624-.653l1.653-5.457a.999.999 0 0 0-.25-.997Z"/>     <path d="M10.233 11.1a.613.613 0 1 0-.867-.868.613.613 0 0 0 .867.868Z"/>
+                                        </svg>
+                                        Rédiger
+                                    </button>
+                                </a>
+
+                                <div id="toggleMails" class="text-violet-700 hover:text-violet-800 font-regular cursor-pointer">
+                                    Mails reçus
+                                </div>
+
+                            </div>
 
                             <div class="inline-flex flex-col w-full rounded-md shadow-sm md:w-auto md:flex-row" role="group">
                                 <div class="licenciesButton">
@@ -54,7 +62,132 @@
 
                 <br>
 
+                <div id="educateursEnvoyesSection" class="hidden">
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <table class="search-table w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 font-regular">
+                                    Date
+                                </th>
+                                <th scope="col" class="px-6 py-3 font-regular">
+                                    Objet
+                                </th>
+                                <th scope="col" class="px-8 py-3 font-regular">
+                                    Expéditeur
+                                </th>
+                                <th scope="col" class="px-8 py-3 font-regular">
+                                    Actions
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="text-center">
+                            {% if mailsEduEnvoyes is empty %}
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <td class="animate-infinite animate-pulse px-6 py-32 font-regular text-xl text-gray-900 whitespace-nowrap dark:text-white" colspan="4">
+                                        Aucun <span class="">mails envoyés</span>
+                                    </td>
 
+                                </tr>
+                            {% else %}
+                                {% for mailContact in mailsEduEnvoyes %}
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <td class="px-6 py-4 font-regular text-gray-900 whitespace-nowrap dark:text-white">
+                                            {{ mailContact.dateEnvoie|date('d/m/Y') }}
+                                        </td>
+                                        <td class="px-6 py-4 font-regular">
+                                            {{ mailContact.objet }}
+                                        </td>
+                                        <td class="px-6 py-4 font-gasoek text-black ">
+                                            {{ app.user.email }}
+                                        </td>
+                                        <td class="px-6 py-4 font-gasoek text-black">
+                                            <button type="button" class="px-5 py-2.5 text-sm font-gasoek text-white inline-flex items-center bg-violet-500 hover:bg-violet-700 ease-in duration-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-2 w-full items-center justify-center">
+                                                <svg class="w-3.5 h-3.5 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                                                    <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
+                                                    <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
+                                                </svg>
+                                                Voir
+                                            </button>
+                                            <button type="button" class="px-5 py-2.5 text-sm font-gasoek text-white inline-flex items-center bg-red-500 hover:bg-red-700 ease-in duration-100 focus:ring-4 focus:outline-none focus:ring-red-300 rounded-lg text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 w-full items-center justify-center">
+                                                <svg class="w-3.5 h-3.5 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z"/>
+                                                </svg>
+                                                Supprimer
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+
+                <div id="licenciesEnvoyesSection" class="hidden">
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <table class="search-table w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 font-regular">
+                                    Date
+                                </th>
+                                <th scope="col" class="px-6 py-3 font-regular">
+                                    Objet
+                                </th>
+                                <th scope="col" class="px-8 py-3 font-regular">
+                                    Expéditeur
+                                </th>
+                                <th scope="col" class="px-8 py-3 font-regular">
+                                    Actions
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="text-center">
+                            {% if mailsContactEnvoyes is empty %}
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <td class="animate-infinite animate-pulse px-6 py-32 font-regular text-xl text-gray-900 whitespace-nowrap dark:text-white" colspan="4">
+                                        Aucun <span class="">mails envoyés</span>
+                                    </td>
+
+                                </tr>
+                            {% else %}
+                                {% for mailContact in mailsContactEnvoyes %}
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <td class="px-6 py-4 font-regular text-gray-900 whitespace-nowrap dark:text-white">
+                                            {{ mailContact.dateEnvoi|date('d/m/Y') }}
+                                        </td>
+                                        <td class="px-6 py-4 font-regular">
+                                            {{ mailContact.objet }}
+                                        </td>
+                                        <td class="px-6 py-4 font-gasoek text-black ">
+                                            {{ app.user.email }}
+                                        </td>
+                                        <td class="px-6 py-4 font-gasoek text-black">
+                                            <button type="button" class="px-5 py-2.5 text-sm font-gasoek text-white inline-flex items-center bg-violet-500 hover:bg-violet-700 ease-in duration-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-2 w-full items-center justify-center">
+                                                <svg class="w-3.5 h-3.5 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                                                    <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
+                                                    <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
+                                                </svg>
+                                                Voir
+                                            </button>
+                                            <button type="button" class="px-5 py-2.5 text-sm font-gasoek text-white inline-flex items-center bg-red-500 hover:bg-red-700 ease-in duration-100 focus:ring-4 focus:outline-none focus:ring-red-300 rounded-lg text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 w-full items-center justify-center">
+                                                <svg class="w-3.5 h-3.5 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z"/>
+                                                </svg>
+                                                Supprimer
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
 
                 <div id="licenciesSection" class="hidden">
 
@@ -178,17 +311,47 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const licenciesButton = document.getElementById('licenciesButton1');
-            const educateursButton = document.getElementById('educateursButton1');
-            const licenciesButton2 = document.getElementById('licenciesButton2');
-            const educateursButton2 = document.getElementById('educateursButton2');
-
+            const toggleMails = document.getElementById('toggleMails');
+            const licenciesEnvoyesSection = document.getElementById('licenciesEnvoyesSection');
+            const educateursEnvoyesSection = document.getElementById('educateursEnvoyesSection');
             const licenciesSection = document.getElementById('licenciesSection');
             const educateursSection = document.getElementById('educateursSection');
+            const licenciesButton = document.getElementById('licenciesButton1');
+            const educateursButton = document.getElementById('educateursButton1');
+
+            let sectionActuelle = 'licencies'; // Valeurs possibles : 'licencies', 'educateurs'
+            let affichageEnvoyes = false; // false pour 'reçus', true pour 'envoyés'
+
+            const actualiserAffichage = () => {
+                const affichageLicencies = sectionActuelle === 'licencies';
+                licenciesSection.classList.toggle('hidden', affichageEnvoyes || !affichageLicencies);
+                educateursSection.classList.toggle('hidden', affichageEnvoyes || affichageLicencies);
+                licenciesEnvoyesSection.classList.toggle('hidden', !affichageEnvoyes || !affichageLicencies);
+                educateursEnvoyesSection.classList.toggle('hidden', !affichageEnvoyes || affichageLicencies);
+
+                toggleMails.textContent = affichageEnvoyes ? '↓ Mails envoyés' : '↓ Mail reçus';
+            };
+
+            toggleMails.addEventListener('click', () => {
+                affichageEnvoyes = !affichageEnvoyes;
+                actualiserAffichage();
+            });
 
             licenciesButton.addEventListener('click', () => {
-                licenciesSection.classList.remove('hidden');
-                educateursSection.classList.add('hidden');
+                sectionActuelle = 'licencies';
+                actualiserAffichage();
+            });
+
+            educateursButton.addEventListener('click', () => {
+                sectionActuelle = 'educateurs';
+                actualiserAffichage();
+            });
+
+            // Initialisation à l'ouverture de la page
+            actualiserAffichage();
+
+            licenciesButton.addEventListener('click', () => {
+
 
                 licenciesButton.classList.add('hidden');
                 licenciesButton2.classList.remove('hidden');
@@ -198,9 +361,6 @@
             });
 
             educateursButton.addEventListener('click', () => {
-                licenciesSection.classList.add('hidden');
-                educateursSection.classList.remove('hidden');
-
                 educateursButton.classList.add('hidden');
                 educateursButton2.classList.remove('hidden');
 
@@ -210,6 +370,7 @@
             licenciesButton.click();
         });
     </script>
+
 
 
 {% endblock %}
