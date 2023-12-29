@@ -30,7 +30,7 @@ class Contact
     #[ORM\OneToOne(mappedBy: 'idContact', cascade: ['persist', 'remove'])]
     private ?Licencie $licencie = null;
 
-    #[ORM\OneToMany(mappedBy: 'idContact', targetEntity: MailContact::class, orphanRemoval: true)]
+    #[ORM\ManyToMany(targetEntity: MailContact::class, mappedBy: 'destinataires')]
     private Collection $mailContacts;
 
     public function __construct()
@@ -120,7 +120,7 @@ class Contact
     {
         if (!$this->mailContacts->contains($mailContact)) {
             $this->mailContacts->add($mailContact);
-            $mailContact->setIdContact($this);
+            $mailContact->addDestinataire($this);
         }
 
         return $this;
@@ -129,12 +129,10 @@ class Contact
     public function removeMailContact(MailContact $mailContact): static
     {
         if ($this->mailContacts->removeElement($mailContact)) {
-            // set the owning side to null (unless already changed)
-            if ($mailContact->getIdContact() === $this) {
-                $mailContact->setIdContact(null);
-            }
+            $mailContact->removeDestinataire($this);
         }
 
         return $this;
     }
+
 }

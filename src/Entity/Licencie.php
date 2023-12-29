@@ -33,6 +33,11 @@ class Licencie
     #[ORM\OneToOne(mappedBy: 'idLicencie', cascade: ['persist', 'remove'])]
     private ?Educateur $educateur = null;
 
+    public function __construct()
+    {
+        $this->numeroLicence = rand(100000, 999999);
+    }
+
     public function getId(): ?int
     {
         return $this->id;

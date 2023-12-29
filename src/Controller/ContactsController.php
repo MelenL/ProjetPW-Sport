@@ -14,11 +14,11 @@ class ContactsController extends AbstractController
     #[Route('/contacts', name: 'app_contacts')]
     public function index(Request $request, CategorieRepository $categorieRepository, ContactRepository $contactRepository): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $categories = $categorieRepository->findAll();
         $categoryId = $request->query->get('category');
         $selectedCategory = null;
-        $licencies = [];
         $contacts = [];
 
         if ($categoryId) {
@@ -31,10 +31,6 @@ class ContactsController extends AbstractController
                     $contacts[$i] = $contactRepository->find($contactId);
                 }
             }
-        }
-
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('home');
         }
 
         return $this->render('contacts/contacts.html.twig', [

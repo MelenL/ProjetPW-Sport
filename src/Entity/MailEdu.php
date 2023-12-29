@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MailEduRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,6 +28,14 @@ class MailEdu
     #[ORM\ManyToOne(inversedBy: 'mailEdus')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Educateur $idEducateur = null;
+
+    #[ORM\ManyToMany(targetEntity: Educateur::class, inversedBy: 'mailEdu')]
+    private Collection $destinaires;
+
+    public function __construct()
+    {
+        $this->destinaires = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -79,4 +89,29 @@ class MailEdu
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Educateur>
+     */
+    public function getDestinaires(): Collection
+    {
+        return $this->destinaires;
+    }
+
+    public function addDestinaire(Educateur $destinaire): static
+    {
+        if (!$this->destinaires->contains($destinaire)) {
+            $this->destinaires->add($destinaire);
+        }
+
+        return $this;
+    }
+
+    public function removeDestinaire(Educateur $destinaire): static
+    {
+        $this->destinaires->removeElement($destinaire);
+
+        return $this;
+    }
+
 }

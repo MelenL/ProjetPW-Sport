@@ -13,6 +13,7 @@ class LicenciesController extends AbstractController
     #[Route('/licencies', name: 'app_licencies')]
     public function index(Request $request, CategorieRepository $categorieRepository): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $categories = $categorieRepository->findAll();
         $categoryId = $request->query->get('category');
@@ -26,16 +27,11 @@ class LicenciesController extends AbstractController
             }
         }
 
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('home');
-        }
-
         return $this->render('licencies/licencies.html.twig', [
             'controller_name' => 'LicenciesController',
             'categories' => $categories,
             'licencies' => $licencies,
             'selectedCategory' => $selectedCategory ?? null,
-
         ]);
     }
 }

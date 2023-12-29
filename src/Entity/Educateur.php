@@ -38,12 +38,12 @@ class Educateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $estAdmin = null;
 
-    #[ORM\OneToMany(mappedBy: 'idEducateur', targetEntity: MailEdu::class, orphanRemoval: true)]
-    private Collection $mailEdus;
+    #[ORM\ManyToMany(targetEntity: MailEdu::class, mappedBy: 'destinaires')]
+    private Collection $mailEdu;
 
     public function __construct()
     {
-        $this->mailEdus = new ArrayCollection();
+        $this->mailEdu = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -143,16 +143,16 @@ class Educateur implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, MailEdu>
      */
-    public function getMailEdus(): Collection
+    public function getMailEdu(): Collection
     {
-        return $this->mailEdus;
+        return $this->mailEdu;
     }
 
     public function addMailEdu(MailEdu $mailEdu): static
     {
-        if (!$this->mailEdus->contains($mailEdu)) {
-            $this->mailEdus->add($mailEdu);
-            $mailEdu->setIdEducateur($this);
+        if (!$this->mailEdu->contains($mailEdu)) {
+            $this->mailEdu->add($mailEdu);
+            $mailEdu->addDestinaire($this);
         }
 
         return $this;
@@ -160,13 +160,11 @@ class Educateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeMailEdu(MailEdu $mailEdu): static
     {
-        if ($this->mailEdus->removeElement($mailEdu)) {
-            // set the owning side to null (unless already changed)
-            if ($mailEdu->getIdEducateur() === $this) {
-                $mailEdu->setIdEducateur(null);
-            }
+        if ($this->mailEdu->removeElement($mailEdu)) {
+            $mailEdu->removeDestinaire($this);
         }
 
         return $this;
     }
+
 }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MailContactRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,6 +28,14 @@ class MailContact
     #[ORM\ManyToOne(inversedBy: 'mailContacts')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Contact $idContact = null;
+
+    #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'mailContacts2')]
+    private Collection $destinataires;
+
+    public function __construct()
+    {
+        $this->destinataires = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -79,4 +89,29 @@ class MailContact
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Categorie>
+     */
+    public function getDestinataires(): Collection
+    {
+        return $this->destinataires;
+    }
+
+    public function addDestinataire(Categorie $destinataire): static
+    {
+        if (!$this->destinataires->contains($destinataire)) {
+            $this->destinataires->add($destinataire);
+        }
+
+        return $this;
+    }
+
+    public function removeDestinataire(Categorie $destinataire): static
+    {
+        $this->destinataires->removeElement($destinataire);
+
+        return $this;
+    }
+
 }
