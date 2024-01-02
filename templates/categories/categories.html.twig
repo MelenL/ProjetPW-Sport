@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LeCoach | Nos catégories{% endblock %}
+
+{% block content %}
+
+    <div class="bg-table4 bg-cover">
+        <div class="flex flex-col items-center justify-center h-screen">
+            <div class="bg-white w-1/2 rounded-lg shadow-lg mx-8 my-8 p-6" style="margin-top: 2cm; margin-bottom: 2cm;">
+                <h2 class="text-4xl font-gasoek text-center mb-6">Nos catégories</h2>
+
+                <hr class="w-48 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700">
+                <br>
+                <br>
+
+
+                <ul class="list-disc text-center">
+                    {% for categorie in categories %}
+                        <li> <span class="text-xl font-regular text-center mb-4"><span class="font-gasoek text-gray-600"> {{ categorie.codeRaccourci }} • </span>{{ categorie.nomCategorie }}</span></li>
+                        <br>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
