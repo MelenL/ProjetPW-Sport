@@ -1,19 +1,18 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}LeCoach | Boite mail{% endblock %}
+
 {% block content %}
     <div class="bg-table4 bg-cover">
     <div class="flex flex-col items-center justify-center h-screen">
         <div class="relative p-4 w-full max-w-4xl h-full md:h-auto">
-            <!-- Modal content -->
             <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
-                <!-- Modal header -->
                 <div class="flex flex-auto justify-center items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
                     <h3 class="text-xl font-gasoek text-violet-800 dark:text-white">
                         Boite Mail <span class="font-regular">  | Nouveau mail</span>
                     </h3>
 
                 </div>
-                <!-- Modal body -->
                     <div class="mb-4">
                         <label for="type" class="block mb-2 text-sm font-gasoek text-gray-800 dark:text-white">Pour</label>
                         <select id="type" class="bg-violet-50 border border-violet-300 font-regular text-violet-700 text-sm rounded-lg focus:ring-violet-700 focus:border-violet-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required>
@@ -69,7 +68,7 @@
                                 ← Boite Mail
                             </a>
                         </div>
-                        <div class="mt-7 flex justify-end"> <!-- Ajout de la classe justify-end -->
+                        <div class="mt-7 flex justify-end">
                             <button type="submit" name="envoyer" class="text-white bg-violet-700 hover:bg-violet-800 font-gasoek rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2">
                                 <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 19 17">
                                     <path d="M2.057 6.9a8.718 8.718 0 0 1 6.41-3.62v-1.2A2.064 2.064 0 0 1 9.626.2a1.979 1.979 0 0 1 2.1.23l5.481 4.308a2.107 2.107 0 0 1 0 3.3l-5.479 4.308a1.977 1.977 0 0 1-2.1.228 2.063 2.063 0 0 1-1.158-1.876v-.942c-5.32 1.284-6.2 5.25-6.238 5.44a1 1 0 0 1-.921.807h-.06a1 1 0 0 1-.953-.7A10.24 10.24 0 0 1 2.057 6.9Z"/>
@@ -130,7 +129,7 @@
                                 ← Boite Mail
                             </a>
                         </div>
-                        <div class="mt-7 flex justify-end"> <!-- Ajout de la classe justify-end -->
+                        <div class="mt-7 flex justify-end">
                             <button type="submit" name="envoyer" class="text-white bg-violet-700 hover:bg-violet-800 font-gasoek rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2">
                                 <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 19 17">
                                     <path d="M2.057 6.9a8.718 8.718 0 0 1 6.41-3.62v-1.2A2.064 2.064 0 0 1 9.626.2a1.979 1.979 0 0 1 2.1.23l5.481 4.308a2.107 2.107 0 0 1 0 3.3l-5.479 4.308a1.977 1.977 0 0 1-2.1.228 2.063 2.063 0 0 1-1.158-1.876v-.942c-5.32 1.284-6.2 5.25-6.238 5.44a1 1 0 0 1-.921.807h-.06a1 1 0 0 1-.953-.7A10.24 10.24 0 0 1 2.057 6.9Z"/>
@@ -152,19 +151,14 @@
     </div>
 
     <script>
-        // Sélectionnez l'élément de menu déroulant "Pour"
         const typeSelect = document.getElementById('type');
 
-        // Sélectionnez les deux divs contenant les balises destinataires
         const mailEducateursDiv = document.getElementById('mailEducateurs');
         const mailLicenciesDiv = document.getElementById('mailLicencies');
 
-        // Ajoutez un gestionnaire d'événements au changement de sélection
         typeSelect.addEventListener('change', function() {
-            // Récupérez la valeur sélectionnée
             const selectedValue = typeSelect.value;
 
-            // En fonction de la sélection, affichez ou masquez les balises
             if (selectedValue === 'educateurs') {
                 mailEducateursDiv.style.display = 'block';
                 mailLicenciesDiv.style.display = 'none';
@@ -174,7 +168,6 @@
             }
         });
 
-        // Exécutez le gestionnaire d'événements une fois au chargement de la page
         typeSelect.dispatchEvent(new Event('change'));
     </script>
 

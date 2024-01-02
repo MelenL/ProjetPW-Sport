@@ -53,6 +53,7 @@ class MailService extends AbstractController
 
         // Récupérer les mails envoyés
         $contactId = $user->getLicencie()->getIdContact();
+        $licencie = $user->getLicencie();
         $mailsContactEnvoyes = $this->mailContactRepository->findBy(['idContact' => $contactId]);
         $mailsEduEnvoyes = $this->mailEduRepository->findBy(['idEducateur' => $user->getId()]);
 
@@ -66,14 +67,10 @@ class MailService extends AbstractController
         $mailsEdu_noms = array_map(fn($contact) => $contact->getLicencie(), $mailsEdu_contacts);
 
         return [
-            'mailsContact' => $mailsContact,
-            'mailsEdu' => $mailsEdu,
-            'mailsContact_contacts' => $mailsContact_contacts,
-            'mailsEdu_noms' => $mailsEdu_noms,
             'mailsContactTrie' => $mailsContactTrie,
             'mailsEduTrie' => $mailsEduTrie,
             'mailsContactEnvoyes' => $mailsContactEnvoyes,
-            'mailsEduEnvoyes' => $mailsEduEnvoyes
+            'mailsEduEnvoyes' => $mailsEduEnvoyes,
         ];
     }
 
@@ -158,6 +155,17 @@ class MailService extends AbstractController
         }
 
         return false;
+    }
+
+    public function getMailDetails(string $type, int $id): ?object
+    {
+        if ($type === 'Edu') {
+            return $this->mailEduRepository->find($id);
+        } elseif ($type === 'Contact') {
+            return $this->mailContactRepository->find($id);
+        }
+
+        return null;
     }
 
 }

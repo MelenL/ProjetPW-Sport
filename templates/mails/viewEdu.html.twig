@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LeCoach | Boite mail{% endblock %}
+
+{% block content %}
+    <div class="bg-table4 bg-cover">
+        <div class="flex flex-col items-center justify-center h-screen">
+            <div class="relative p-4 w-full max-w-4xl h-full md:h-auto">
+                <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+                    <div class="flex flex-auto justify-center items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+                        <h3 class="text-xl font-gasoek text-violet-800 dark:text-white">
+                            {{ mail.dateEnvoie|date('d/m/Y') }} <span class="font-regular">  | Mail de {{ mail.idEducateur.licencie.prenom }} {{ mail.idEducateur.licencie.nom }}</span>
+                        </h3>
+                    </div>
+                    <div class="mb-6">
+                        <label for="type" class="block mb-2 text-sm font-gasoek text-violet-800 dark:text-white">Objet</label>
+                        <div class="text-gray-700 dark:text-gray-300">
+                            <input type="text" id="disabled-input-2" aria-label="disabled input 2" class=" bg-violet-50 border border-violet-300 font-regular text-violet-700 text-sm rounded-lg block w-full p-2.5" value={{ mail.objet }}  readonly>
+                        </div>
+
+                        <br>
+
+                        {% set prenoms_concatenes = '' %}
+                        {% for destinataire in mail.destinaires %}
+                            {% set prenoms_concatenes = prenoms_concatenes ~ ' <' ~ destinataire.email ~ '> ' ~ destinataire.licencie.prenom ~ ' ' ~ destinataire.licencie.nom %}
+                        {% endfor %}
+
+                        <div class="text-gray-700 dark:text-gray-300">
+                            <label for="type" class="block mb-2 text-sm font-gasoek text-violet-800 dark:text-white">Destinataire(s)</label>
+                            <input type="text" id="disabled-input-2" aria-label="disabled input 2" class="bg-violet-50 border border-violet-300 font-regular text-violet-700 text-sm rounded-lg block w-full p-2.5" value="{{ prenoms_concatenes }}" readonly>
+                        </div>
+
+
+                        <hr class="w-96 h-1 mx-auto my-16 bg-gray-200 border-0 rounded mt-10 mb-4 dark:bg-gray-700">
+
+                        <div class="text-gray-700 dark:text-gray-300 mt-4">
+                            <label for="type" class="block mb-2 text-sm font-gasoek text-gray-800 dark:text-white">Message</label>
+                            <input type="text" id="disabled-input-2" aria-label="disabled input 2" class="bg-gray-50 border border-gray-300 font-regular text-gray-700 text-sm rounded-lg block w-full p-2.5" value="{{ mail.message }}" readonly>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <div class="mt-7 flex justify-start">
+                                <a href="{{ path('app_mails') }}" class="flex justify-start font-bold italic text-violet-700 hover:text-violet-800 ease-in duration-100">
+                                    ← Boite Mail
+                                </a>
+                            </div>
+
+
+                            {% if app.user.id == mail.idEducateur.id %}
+                                <div class="mt-7 flex justify-end">
+                                    <a href="{{ path('app_mails_delete', {'type': 'Edu', 'id': mail.id}) }}">
+                                        <button class="px-5 py-2.5 text-sm font-gasoek text-white inline-flex items-center bg-red-500 hover:bg-red-600 ease-in duration-100 focus:ring-4 focus:outline-none focus:ring-red-300 rounded-lg text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 w-full items-center justify-center">
+                                            <svg class="w-3.5 h-3.5 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z"/>
+                                            </svg>
+                                            Supprimer
+                                        </button>
+                                    </a>
+                                </div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

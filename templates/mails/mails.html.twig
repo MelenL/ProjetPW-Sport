@@ -90,31 +90,35 @@
 
                                 </tr>
                             {% else %}
-                                {% for mailContact in mailsEduEnvoyes %}
+                                {% for mailEdu in mailsEduEnvoyes %}
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <td class="px-6 py-4 font-regular text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{ mailContact.dateEnvoie|date('d/m/Y') }}
+                                            {{ mailEdu.dateEnvoie|date('d/m/Y') }}
                                         </td>
                                         <td class="px-6 py-4 font-regular">
-                                            {{ mailContact.objet }}
+                                            {{ mailEdu.objet }}
                                         </td>
                                         <td class="px-6 py-4 font-gasoek text-black ">
-                                            {{ app.user.email }}
+                                            {{ mailEdu.idEducateur.licencie.prenom }} {{ mailEdu.idEducateur.licencie.nom }}
                                         </td>
                                         <td class="px-6 py-4 font-gasoek text-black">
-                                            <button type="button" class="px-5 py-2.5 text-sm font-gasoek text-white inline-flex items-center bg-violet-500 hover:bg-violet-700 ease-in duration-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-2 w-full items-center justify-center">
-                                                <svg class="w-3.5 h-3.5 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
-                                                    <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
-                                                    <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
-                                                </svg>
-                                                Voir
-                                            </button>
-                                            <button type="button" class="px-5 py-2.5 text-sm font-gasoek text-white inline-flex items-center bg-red-500 hover:bg-red-700 ease-in duration-100 focus:ring-4 focus:outline-none focus:ring-red-300 rounded-lg text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 w-full items-center justify-center">
-                                                <svg class="w-3.5 h-3.5 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z"/>
-                                                </svg>
-                                                Supprimer
-                                            </button>
+                                            <a href="{{ path('app_mail_view', {'type': 'Edu', 'id': mailEdu.id}) }}">
+                                                <button type="button" class="px-5 py-2.5 text-sm font-gasoek text-white inline-flex items-center bg-violet-500 hover:bg-violet-700 ease-in duration-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-2 w-full items-center justify-center">
+                                                    <svg class="w-3.5 h-3.5 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                                                        <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
+                                                        <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
+                                                    </svg>
+                                                    Voir
+                                                </button>
+                                            </a>
+                                            <a href="{{ path('app_mails_delete', {'type': 'Edu', 'id': mailEdu.id}) }}">
+                                                <button class="px-5 py-2.5 text-sm font-gasoek text-white inline-flex items-center bg-red-500 hover:bg-red-600 ease-in duration-100 focus:ring-4 focus:outline-none focus:ring-red-300 rounded-lg text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 w-full items-center justify-center">
+                                                    <svg class="w-3.5 h-3.5 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z"/>
+                                                    </svg>
+                                                    Supprimer
+                                                </button>
+                                            </a>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -163,22 +167,26 @@
                                             {{ mailContact.objet }}
                                         </td>
                                         <td class="px-6 py-4 font-gasoek text-black ">
-                                            {{ app.user.email }}
+                                            {{ mailContact.idContact.prenom }} {{ mailContact.idContact.nom }}
                                         </td>
                                         <td class="px-6 py-4 font-gasoek text-black">
-                                            <button type="button" class="px-5 py-2.5 text-sm font-gasoek text-white inline-flex items-center bg-violet-500 hover:bg-violet-700 ease-in duration-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-2 w-full items-center justify-center">
-                                                <svg class="w-3.5 h-3.5 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
-                                                    <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
-                                                    <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
-                                                </svg>
-                                                Voir
-                                            </button>
-                                            <button type="button" class="px-5 py-2.5 text-sm font-gasoek text-white inline-flex items-center bg-red-500 hover:bg-red-700 ease-in duration-100 focus:ring-4 focus:outline-none focus:ring-red-300 rounded-lg text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 w-full items-center justify-center">
-                                                <svg class="w-3.5 h-3.5 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z"/>
-                                                </svg>
-                                                Supprimer
-                                            </button>
+                                            <a href="{{ path('app_mail_view', {'type': 'Contact', 'id': mailContact.id}) }}">
+                                                <button type="button" class="px-5 py-2.5 text-sm font-gasoek text-white inline-flex items-center bg-violet-500 hover:bg-violet-700 ease-in duration-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-2 w-full items-center justify-center">
+                                                    <svg class="w-3.5 h-3.5 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                                                        <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
+                                                        <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
+                                                    </svg>
+                                                    Voir
+                                                </button>
+                                            </a>
+                                            <a href="{{ path('app_mails_delete', {'type': 'Contact', 'id': mailContact.id}) }}">
+                                                <button type="button" class="px-5 py-2.5 text-sm font-gasoek text-white inline-flex items-center bg-red-500 hover:bg-red-700 ease-in duration-100 focus:ring-4 focus:outline-none focus:ring-red-300 rounded-lg text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 w-full items-center justify-center">
+                                                        <svg class="w-3.5 h-3.5 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z"/>
+                                                        </svg>
+                                                        Supprimer
+                                                </button>
+                                            </a>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -210,7 +218,7 @@
                             </tr>
                             </thead>
                             <tbody class="text-center">
-                            {% if mailsContact is empty %}
+                            {% if mailsContactTrie is empty %}
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <td class="animate-infinite animate-pulse px-6 py-32 font-regular text-xl text-gray-900 whitespace-nowrap dark:text-white" colspan="4">
                                         Aucun <span class="">mails</span>
@@ -227,17 +235,19 @@
                                             {{ mailContact.objet }}
                                         </td>
                                         <td class="px-6 py-4 font-gasoek text-black ">
-                                            {{ mailsContact_contacts[loop.index-1].prenom }} {{ mailsContact_contacts[loop.index-1].nom }}
+                                            {{ mailContact.idContact.prenom }} {{ mailContact.idContact.nom }}
 
                                         </td>
                                         <td class="px-6 py-4 font-gasoek text-black">
-                                            <button type="button" class="px-5 py-2.5 text-sm font-gasoek text-white inline-flex items-center bg-violet-500 hover:bg-violet-700 ease-in duration-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                                <svg class="w-3.5 h-3.5 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
-                                                    <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
-                                                    <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
-                                                </svg>
-                                                Voir
-                                            </button>
+                                            <a href="{{ path('app_mail_view', {'type': 'Contact', 'id': mailContact.id}) }}">
+                                                <button type="button" class="px-5 py-2.5 text-sm font-gasoek text-white inline-flex items-center bg-violet-500 hover:bg-violet-700 ease-in duration-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                    <svg class="w-3.5 h-3.5 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                                                        <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
+                                                        <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
+                                                    </svg>
+                                                    Voir
+                                                </button>
+                                            </a>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -285,16 +295,18 @@
                                             {{ mailEdu.objet }}
                                         </td>
                                         <td class="px-6 py-4 font-gasoek text-black ">
-                                            {{ mailsEdu_noms[loop.index-1].prenom }} {{ mailsEdu_noms[loop.index-1].nom }}
+                                            {{ mailEdu.idEducateur.licencie.prenom }} {{ mailEdu.idEducateur.licencie.nom }}
                                         </td>
                                         <td class="px-6 py-4 font-gasoek text-black">
-                                            <button type="button" class="px-5 py-2.5 text-sm font-gasoek text-white inline-flex items-center bg-violet-500 hover:bg-violet-700 ease-in duration-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                                <svg class="w-3.5 h-3.5 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
-                                                    <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
-                                                    <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
-                                                </svg>
-                                                Voir
-                                            </button>
+                                            <a href="{{ path('app_mail_view', {'type': 'Edu', 'id': mailEdu.id}) }}">
+                                                <button type="button" class="px-5 py-2.5 text-sm font-gasoek text-white inline-flex items-center bg-violet-500 hover:bg-violet-700 ease-in duration-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                    <svg class="w-3.5 h-3.5 text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                                                        <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
+                                                        <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
+                                                    </svg>
+                                                    Voir
+                                                </button>
+                                            </a>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -319,8 +331,8 @@
             const licenciesButton = document.getElementById('licenciesButton1');
             const educateursButton = document.getElementById('educateursButton1');
 
-            let sectionActuelle = 'licencies'; // Valeurs possibles : 'licencies', 'educateurs'
-            let affichageEnvoyes = false; // false pour 'reçus', true pour 'envoyés'
+            let sectionActuelle = 'licencies';
+            let affichageEnvoyes = false;
 
             const actualiserAffichage = () => {
                 const affichageLicencies = sectionActuelle === 'licencies';
@@ -329,7 +341,7 @@
                 licenciesEnvoyesSection.classList.toggle('hidden', !affichageEnvoyes || !affichageLicencies);
                 educateursEnvoyesSection.classList.toggle('hidden', !affichageEnvoyes || affichageLicencies);
 
-                toggleMails.textContent = affichageEnvoyes ? '↓ Mails envoyés' : '↓ Mail reçus';
+                toggleMails.textContent = affichageEnvoyes ? '↑ Mails envoyés' : '↓ Mail reçus';
             };
 
             toggleMails.addEventListener('click', () => {
@@ -347,7 +359,6 @@
                 actualiserAffichage();
             });
 
-            // Initialisation à l'ouverture de la page
             actualiserAffichage();
 
             licenciesButton.addEventListener('click', () => {
@@ -369,8 +380,11 @@
             });
             licenciesButton.click();
         });
-    </script>
 
+        document.addEventListener("DOMContentLoaded", function(event) {
+            document.getElementById('deleteButton').click();
+        });
+    </script>
 
 
 {% endblock %}
