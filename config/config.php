@@ -1,6 +1,6 @@
 <?php
-$host = "localhost";
-$database = "contacts";
-$username = "root";
-$password = "";
+$host = '127.0.0.1:8889';
+$database = 'sport';
+$username = 'root';
+$password = 'root';
 ?>
