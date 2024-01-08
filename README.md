@@ -1,2 +1,2 @@
 # ProjetPW-Sport
-Projet PW - PHP &amp; Symfony
+Projet PW - PHP
