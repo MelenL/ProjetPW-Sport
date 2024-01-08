@@ -1,5 +1,8 @@
 <?php
 
+// Inclure le fichier Categorie.php
+require_once 'classes/models/Categorie.php';
+
 class CategorieDAO {
     private PDO $db;
 

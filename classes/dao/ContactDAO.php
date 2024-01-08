@@ -1,5 +1,8 @@
 <?php
 
+// Inclure le fichier Contact.php
+require_once 'classes/models/Contact.php';
+
 class ContactDAO {
     private PDO $db;
 

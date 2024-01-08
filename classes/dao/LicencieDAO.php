@@ -1,5 +1,7 @@
 <?php
 
+require_once 'classes/models/Licencie.php';
+
 class LicencieDAO {
     private PDO $db;
 
