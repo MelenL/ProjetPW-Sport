@@ -37,6 +37,26 @@ switch ($page) {
         header('Location: /index.php?page=login');
         exit();
         break;
+    case 'categories':
+        // Vérifier si l'utilisateur est authentifié avant d'afficher la page des catégories
+        if (isAuthenticated()) {
+            require './controllers/CategorieController.php'; // Inclure le contrôleur
+        } else {
+            // Si non authentifié, rediriger vers la page de connexion
+            header('Location: /index.php?page=login');
+            exit();
+        }
+        break;
+    case 'licencie':
+        // Vérifier si l'utilisateur est authentifié avant d'afficher la page des licenciés
+        if (isAuthenticated()) {
+            require './controllers/LicencieController.php'; // Inclure le contrôleur
+        } else {
+            // Si non authentifié, rediriger vers la page de connexion
+            header('Location: /index.php?page=login');
+            exit();
+        }
+        break;
     default:
         // Afficher une page d'erreur PAS ENCORE FAIT
         break;

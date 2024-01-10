@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Tableau de bord - LeCoach</title>
+    <title>LeCoach | Admin</title>
 
 </head>
 <body>
