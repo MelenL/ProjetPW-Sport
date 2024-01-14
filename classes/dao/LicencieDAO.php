@@ -89,4 +89,28 @@ class LicencieDAO {
         }
     }
 
+    public function deleteWithEducateur(int $id): void {
+        // Récupérer l'ID du contact lié au licencié
+        $stmt = $this->db->prepare("SELECT id_contact_id FROM licencie WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row && $row['id_contact_id']) {
+            $contactId = $row['id_contact_id'];
+
+            // Supprimer l'éducateur lié au licencié
+            $stmt = $this->db->prepare("DELETE FROM educateur WHERE licencie_id = :licencie_id");
+            $stmt->execute(['licencie_id' => $id]);
+
+            // Supprimer le licencié
+            $stmt = $this->db->prepare("DELETE FROM licencie WHERE id = :id");
+            $stmt->execute(['id' => $id]);
+
+            // Supprimer le contact
+            $stmt = $this->db->prepare("DELETE FROM contact WHERE id = :contactId");
+            $stmt->execute(['contactId' => $contactId]);
+        }
+    }
+
+
 }

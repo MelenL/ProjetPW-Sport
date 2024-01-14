@@ -2,23 +2,28 @@
 
 class Educateur {
     private ?int $id;
+    private ?int $licencieId;
     private ?string $email;
     private array $roles;
     private ?string $password;
     private ?bool $estAdmin;
 
     // Constructeur
-    public function __construct(?int $id, ?string $email, array $roles, ?string $password, ?bool $estAdmin) {
+    public function __construct(?int $id, ?int $licencieId, ?string $email, array $roles, ?string $password, ?bool $estAdmin) {
         $this->id = $id;
+        $this->licencieId = $licencieId;
         $this->email = $email;
         $this->roles = $roles;
         $this->password = $password;
         $this->estAdmin = $estAdmin;
     }
 
-    // Getters
     public function getId(): ?int {
         return $this->id;
+    }
+
+    public function getLicencieId(): ?int {
+        return $this->licencieId;
     }
 
     public function getEmail(): ?string {
@@ -37,7 +42,11 @@ class Educateur {
         return $this->estAdmin;
     }
 
-    // Setters
+// Setters
+    public function setLicencieId(?int $licencieId): void {
+        $this->licencieId = $licencieId;
+    }
+
     public function setEmail(?string $email): void {
         $this->email = $email;
     }
@@ -53,4 +62,5 @@ class Educateur {
     public function setEstAdmin(?bool $estAdmin): void {
         $this->estAdmin = $estAdmin;
     }
+
 }

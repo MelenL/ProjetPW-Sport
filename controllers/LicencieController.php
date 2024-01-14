@@ -96,7 +96,7 @@ switch ($action) {
     case 'delete':
         if (isset($_GET['id'])) {
             $licencieId = (int)$_GET['id'];
-            $licencieDAO->delete($licencieId);
+            $licencieDAO->deleteWithEducateur($licencieId);
             // Rediriger vers la page des licenciés avec un message de succès
             header('Location: /index.php?page=licencie&success=Le licencié a été supprimé avec succès');
             exit();
