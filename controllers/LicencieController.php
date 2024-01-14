@@ -115,14 +115,11 @@ switch ($action) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['csvFile'])) {
             $csvFile = $_FILES['csvFile'];
 
-            // Vérifier si le fichier a été téléchargé sans erreur
             if ($csvFile['error'] == 0) {
                 $name = $csvFile['name'];
 
-                // Assigner le résultat de explode à une variable
                 $nameParts = explode('.', $name);
 
-                // Maintenant, passer cette variable à end
                 $ext = strtolower(end($nameParts));
 
                 if ($ext === 'csv') {
@@ -132,8 +129,7 @@ switch ($action) {
                     fgetcsv($handle);
 
                     while (($data = fgetcsv($handle)) !== FALSE) {
-                        // Assurez-vous que le nombre de données est correct
-                        if (count($data) >= 6) { // Adaptez le nombre selon la structure de votre CSV
+                        if (count($data) >= 6) {
                             $numeroLicence = $data[0];
                             $nom = $data[1];
                             $prenom = $data[2];
@@ -144,7 +140,6 @@ switch ($action) {
                             // Créer un nouveau contact
                             $contact = new Contact(null, $nom, $prenom, $email, $numeroTel);
 
-                            // Créer un nouveau licencié (sans l'ID de contact pour l'instant)
                             $licencie = new Licencie(null, $numeroLicence, $nom, $prenom, $categorieId, null);
 
                             // Enregistrer le nouveau licencié et le contact dans la base de données
@@ -188,7 +183,6 @@ switch ($action) {
                 $licencie->getNom(),
                 $licencie->getPrenom(),
                 $licencie->getCategorie(),
-                // Supposons que vous ayez une méthode pour obtenir l'email et le numéro de téléphone
                 $contact->getEmail(),
                 $contact->getNumeroTel()
             ]);
