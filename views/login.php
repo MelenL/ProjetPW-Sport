@@ -1,4 +1,3 @@
-<!-- Dans views/login.php -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>

@@ -68,7 +68,6 @@ switch ($page) {
         }
         break;
     default:
-        // Afficher une page d'erreur PAS ENCORE FAIT
         break;
 }
 

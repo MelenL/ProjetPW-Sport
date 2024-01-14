@@ -10,9 +10,6 @@
     <h1>Gestion des Licenciés</h1>
 </header>
 
-<!-- Afficher les messages d'erreur ou de succès ici s'il y en a -->
-
-<!-- Liste des licenciés existants -->
 <h2>Liste des Licenciés</h2>
 <ul>
     <?php foreach ($licencies as $licencie) : ?>
@@ -24,7 +21,6 @@
     <?php endforeach; ?>
 </ul>
 
-<!-- Formulaire pour créer un nouveau licencié -->
 <h2>Créer un nouveau Licencié</h2>
 <form action="/index.php?page=licencie&action=create" method="post">
     <div class="form-group">
@@ -60,4 +56,7 @@
 </form>
 
 </body>
+
+<br>
+<a href="/index.php?page=home">Retour à l'Accueil</a>
 </html>

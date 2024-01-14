@@ -10,7 +10,6 @@
 <h1>Modifier une catégorie</h1>
 
 <?php
-// Vérifier s'il y a des messages d'erreur ou de succès à afficher
 if (isset($_GET['error'])) {
     echo '<p class="error">' . $_GET['error'] . '</p>';
 } elseif (isset($_GET['success'])) {
@@ -37,6 +36,10 @@ if (isset($_GET['error'])) {
     <button type="submit">Enregistrer les modifications</button>
 </form>
 
-<a href="/index.php?page=categories">Retour à la liste des catégories</a>
+<br>
+<a href="/index.php?page=categories">Retour à la liste</a>
+
 </body>
+
+
 </html>

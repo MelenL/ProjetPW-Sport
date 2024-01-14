@@ -10,9 +10,6 @@
     <h1>Gestion des Catégories</h1>
 </header>
 
-<!-- Afficher les messages d'erreur ou de succès ici s'il y en a -->
-
-<!-- Liste des catégories existantes -->
 <h2>Liste des Catégories</h2>
 <ul>
     <?php foreach ($categories as $categorie) : ?>
@@ -41,5 +38,9 @@
     </div>
     <button type="submit">Créer Catégorie</button>
 </form>
+
+<br>
+<a href="/index.php?page=home">Retour à l'Accueil</a>
+
 </body>
 </html>

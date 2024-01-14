@@ -45,4 +45,7 @@ if (isset($_GET['error'])) {
     <button type="submit">Mettre à jour</button>
 </form>
 </body>
+
+<br>
+<a href="/index.php?page=educateur">Retour à la liste</a>
 </html>

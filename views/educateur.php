@@ -57,5 +57,8 @@
     <button type="submit">Créer Éducateur</button>
 </form>
 
+<br>
+<a href="/index.php?page=home">Retour à l'Accueil</a>
+
 </body>
 </html>
