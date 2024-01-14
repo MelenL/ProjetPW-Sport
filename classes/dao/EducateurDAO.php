@@ -9,6 +9,27 @@ class EducateurDAO {
         $this->db = $db;
     }
 
+    public function findByEmail(string $email): ?Educateur {
+        $stmt = $this->db->prepare("SELECT * FROM educateur WHERE email = :email");
+        $stmt->execute(['email' => $email]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$row) {
+            return null;
+        }
+
+        // Construisez l'objet Educateur à partir des données de la base de données
+        return new Educateur(
+            $row['id'],
+            $row['licencie_id'],
+            $row['email'],
+            json_decode($row['roles'], true),
+            $row['password'],
+            (bool)$row['est_admin']
+        );
+    }
+
+
     // Méthode pour créer un éducateur
     public function create(Educateur $educateur): void {
         $stmt = $this->db->prepare("INSERT INTO educateur (licencie_id, email, password, est_admin, roles) VALUES (:licencie_id, :email, :password, :est_admin, :roles)");
@@ -78,4 +99,31 @@ class EducateurDAO {
 
         return $educateurs;
     }
+
+    public function getNom(int $educateurId): ?string {
+        $query = "SELECT l.nom
+                  FROM educateur AS e
+                  INNER JOIN licencie AS l ON e.licencie_id = l.id
+                  WHERE e.id = :id";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id', $educateurId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+
+    public function getPrenom(int $educateurId): ?string {
+        $query = "SELECT l.prenom
+                  FROM educateur AS e
+                  INNER JOIN licencie AS l ON e.licencie_id = l.id
+                  WHERE e.id = :id";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id', $educateurId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+
 }

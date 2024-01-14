@@ -18,12 +18,9 @@ class Educateur {
         $this->estAdmin = $estAdmin;
     }
 
+    // Getters
     public function getId(): ?int {
         return $this->id;
-    }
-
-    public function getLicencieId(): ?int {
-        return $this->licencieId;
     }
 
     public function getEmail(): ?string {
@@ -42,11 +39,11 @@ class Educateur {
         return $this->estAdmin;
     }
 
-// Setters
-    public function setLicencieId(?int $licencieId): void {
-        $this->licencieId = $licencieId;
+    public function getLicencieId(): ?int {
+        return $this->licencieId;
     }
 
+    // Setters
     public function setEmail(?string $email): void {
         $this->email = $email;
     }
@@ -63,4 +60,7 @@ class Educateur {
         $this->estAdmin = $estAdmin;
     }
 
+    public function setLicencieId(?int $licencieId): void {
+        $this->licencieId = $licencieId;
+    }
 }

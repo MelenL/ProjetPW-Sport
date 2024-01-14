@@ -17,12 +17,12 @@ $action = $_GET['action'] ?? '';
 
 switch ($action) {
     case 'create':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nom'], $_POST['prenom'], $_POST['licencie_id'], $_POST['isAdmin'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['licencie_id'], $_POST['email'], $_POST['password'], $_POST['isAdmin'])) {
             // Récupérer les données du formulaire
-            $nom = $_POST['nom'];
-            $prenom = $_POST['prenom'];
             $licencieId = (int)$_POST['licencie_id'];
-            $isAdmin = $_POST['isAdmin'] === 'oui' ? true : false; // Convertir 'oui' en true, sinon false
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $isAdmin = ($_POST['isAdmin'] === '1') ? 1 : 0;
 
             // Vérifier si le licencie_id est valide
             $licencie = $licencieDAO->findById($licencieId);
@@ -31,8 +31,13 @@ switch ($action) {
                 exit();
             }
 
-            // Créer un nouvel éducateur
-            $educateur = new Educateur(null, $nom, $prenom, $licencieId, $isAdmin);
+            $role = [];
+
+            // Hacher le mot de passe
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+            // Créer un nouvel éducateur avec email et mot de passe haché
+            $educateur = new Educateur(null, $licencieId, $email, $role, $hashedPassword, $isAdmin);
 
             // Enregistrer le nouvel éducateur dans la base de données
             $educateurDAO->create($educateur);
@@ -41,6 +46,8 @@ switch ($action) {
             exit();
         }
         break;
+
+
 
     case 'edit':
         if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
@@ -54,13 +61,12 @@ switch ($action) {
                 header('Location: /index.php?page=educateur&error=Éducateur non trouvé');
                 exit();
             }
-        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'], $_POST['nom'], $_POST['prenom'], $_POST['licencie_id'], $_POST['isAdmin'])) {
+        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'], $_POST['licencie_id'], $_POST['isAdmin'], $_POST['new_password'], $_POST['email'])) {
             // Récupérer les données du formulaire
             $id = (int)$_POST['id'];
-            $nom = $_POST['nom'];
-            $prenom = $_POST['prenom'];
             $licencieId = (int)$_POST['licencie_id'];
-            $isAdmin = $_POST['isAdmin'] === 'oui' ? true : false;
+            $isAdmin = ($_POST['isAdmin'] === '1') ? 1 : 0;
+            $email = $_POST['email'];
 
             // Vérifier si le licencie_id est valide
             $licencie = $licencieDAO->findById($licencieId);
@@ -69,6 +75,8 @@ switch ($action) {
                 exit();
             }
 
+
+
             // Récupérer l'objet Éducateur existant
             $educateur = $educateurDAO->findById($id);
             if (!$educateur) {
@@ -76,18 +84,26 @@ switch ($action) {
                 exit();
             }
 
-            // Mettre à jour l'éducateur
-            $educateur->setNom($nom);
-            $educateur->setPrenom($prenom);
-            $educateur->setLicencieId($licencieId);
-            $educateur->setIsAdmin($isAdmin);
+            $educateur->setEmail($email);
 
-            $educateurDAO->edit($educateur);
+            $educateur->setEstAdmin($isAdmin);
+
+            $educateur->setLicencieId($licencieId);
+
+            // Vérifier si un nouveau mot de passe a été fourni
+            if (!empty($_POST['new_password'])) {
+                // Hacher le nouveau mot de passe
+                $newPasswordHash = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
+                $educateur->setPassword($newPasswordHash);
+            }
+
+            $educateurDAO->update($educateur);
 
             header('Location: /index.php?page=educateur&success=L\'éducateur a été mis à jour avec succès');
             exit();
         }
         break;
+
 
     case 'delete':
         if (isset($_GET['id'])) {
@@ -101,6 +117,8 @@ switch ($action) {
 
     default:
         // Afficher la liste des éducateurs existants
+        $licencies = $licencieDAO->findAll();
+        $educateurDAO = new EducateurDAO($db);
         $educateurs = $educateurDAO->findAll();
         require 'views/educateur.php';
         break;
