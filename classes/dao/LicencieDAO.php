@@ -53,18 +53,23 @@ class LicencieDAO {
     }
 
 
-// Méthode pour mettre à jour un licencié
-    public function update(Licencie $licencie): void {
-        $stmt = $this->db->prepare("UPDATE licencie SET numero_licence = :numero_licence, nom = :nom, prenom = :prenom, id_categorie_id = :categorie_id, id_contact_id = :contact_id WHERE id = :id");
+    // Méthode pour mettre à jour un licencié
+    public function edit(Licencie $licencie, Contact $contact): void {
+        // Tout d'abord, mettez à jour le contact associé
+        $contactDAO = new ContactDAO($this->db);
+        $contactDAO->update($contact);
+
+        // Ensuite, mettez à jour le licencié
+        $stmt = $this->db->prepare("UPDATE licencie SET numero_licence = :numero_licence, nom = :nom, prenom = :prenom, id_categorie_id = :categorie_id WHERE id = :id");
         $stmt->execute([
             'id' => $licencie->getId(),
             'numero_licence' => $licencie->getNumeroLicence(),
             'nom' => $licencie->getNom(),
             'prenom' => $licencie->getPrenom(),
-            'categorie_id' => $licencie->getCategorie(),
-            'contact_id' => $licencie->getContactId()
+            'categorie_id' => $licencie->getCategorie()
         ]);
     }
+
 
 
     // Méthode pour supprimer un licencié

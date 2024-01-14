@@ -47,7 +47,50 @@ switch ($action) {
 
 
     case 'edit':
-        // Gérer la modification d'un licencié ici
+        if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
+            $licencieId = (int)$_GET['id'];
+            $licencie = $licencieDAO->findById($licencieId);
+
+            if ($licencie) {
+                // Afficher le formulaire de modification pré-rempli
+                require 'views/edit_licencie.php';
+            } else {
+                // Rediriger avec un message d'erreur si la catégorie n'existe pas
+                header('Location: /index.php?page=licencie&error=Licencie non trouvé');
+                exit();
+            }
+        }
+        elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'], $_POST['numeroLicence'], $_POST['nom'], $_POST['prenom'], $_POST['categorie_id'], $_POST['email'], $_POST['numeroTel'])) {
+            // Récupérer les données du formulaire
+            $id = (int)$_POST['id'];
+            $numeroLicence = (int)$_POST['numeroLicence'];
+            $nom = $_POST['nom'];
+            $prenom = $_POST['prenom'];
+            $categorieId = (int)$_POST['categorie_id'];
+            $email = $_POST['email'];
+            $numeroTel = $_POST['numeroTel'];
+
+            // Récupérer l'objet Licencie existant et son ID de contact
+            $licencie = $licencieDAO->findById($id);
+            if (!$licencie) {
+                // Gérer l'erreur si le licencie n'est pas trouvé
+                header('Location: /index.php?page=licencie&error=Licencie non trouvé');
+                exit();
+            }
+
+            $contactId = $licencie->getContactId();
+
+            // Créer les objets Licencie et Contact avec les nouvelles données
+            $contact = new Contact($contactId, $nom, $prenom, $email, $numeroTel);
+            $licencie = new Licencie($id, $numeroLicence, $nom, $prenom, $categorieId, $contactId);
+
+            // Mettre à jour le licencié et le contact dans la base de données
+            $licencieDAO->edit($licencie, $contact);
+
+            // Rediriger vers la page des licenciés avec un message de succès
+            header('Location: /index.php?page=licencie&success=Le licencié a été mis à jour avec succès');
+            exit();
+        }
         break;
 
     case 'delete':

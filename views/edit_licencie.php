@@ -1,29 +1,64 @@
+<!-- edit_category.php -->
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifier un Licencié</title>
+    <title>LeCoach | Admin</title>
 </head>
 <body>
-<h1>Modifier un Licencié</h1>
-<form action="/index.php?page=licencie&action=update" method="post">
-    <input type="hidden" name="id" value="<?= $licencie->getId() ?>">
-    <label for="numeroLicence">Numéro de Licence :</label>
-    <input type="text" name="numeroLicence" id="numeroLicence" value="<?= $licencie->getNumeroLicence() ?>" required><br>
-    <label for="nom">Nom :</label>
-    <input type="text" name="nom" id="nom" value="<?= $licencie->getNom() ?>" required><br>
-    <label for="prenom">Prénom :</label>
-    <input type="text" name="prenom" id="prenom" value="<?= $licencie->getPrenom() ?>" required><br>
-    <label for="categorieId">Catégorie :</label>
-    <select name="categorieId" id="categorieId" required>
+<h1>Modifier un Licencie</h1>
+
+<?php
+require_once 'classes/dao/ContactDAO.php';
+require_once 'classes/models/Connexion.php';
+require_once 'classes/dao/CategorieDAO.php';
+
+$connexion = new Connexion();
+$db = $connexion->pdo;
+
+// Vérifier s'il y a des messages d'erreur ou de succès à afficher
+if (isset($_GET['error'])) {
+    echo '<p class="error">' . $_GET['error'] . '</p>';
+} elseif (isset($_GET['success'])) {
+    echo '<p class="success">' . $_GET['success'] . '</p>';
+}
+
+$categorieDAO = new CategorieDAO($db);
+$categories = $categorieDAO->findAll();
+$contactDAO = new ContactDAO($db);
+$Idcontact = $licencie->getContactId();
+$contact = $contactDAO->findById($Idcontact);
+?>
+
+<form action="/index.php?page=licencie&action=edit" method="post">
+    <input type="hidden" name="id" value="<?php echo $licencie->getId(); ?>">
+
+    <label for="numeroLicence">Numéro de Licence:</label>
+    <input type="text" id="numeroLicence" name="numeroLicence" value="<?php echo $licencie->getNumeroLicence(); ?>">
+
+    <label for="nom">Nom:</label>
+    <input type="text" id="nom" name="nom" value="<?php echo $licencie->getNom(); ?>">
+
+    <label for="prenom">Prénom:</label>
+    <input type="text" id="prenom" name="prenom" value="<?php echo $licencie->getPrenom(); ?>">
+
+    <label for="categorie_id">Catégorie:</label>
+    <select id="categorie_id" name="categorie_id">
         <?php foreach ($categories as $categorie) : ?>
-            <option value="<?= $categorie->getId() ?>" <?= $categorie->getId() === $licencie->getCategorieId() ? 'selected' : '' ?>>
-                <?= $categorie->getNomCategorie() ?>
+            <option value="<?php echo $categorie->getId(); ?>" <?php echo $licencie->getCategorie() == $categorie->getId() ? 'selected' : ''; ?>>
+                <?php echo htmlspecialchars($categorie->getNomCategorie(), ENT_QUOTES, 'UTF-8'); ?>
             </option>
         <?php endforeach; ?>
-    </select><br>
-    <input type="submit" value="Mettre à jour">
+    </select>
+
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="<?php echo $contact->getEmail(); ?>">
+
+    <label for="numeroTel">Numéro de Téléphone:</label>
+    <input type="text" id="numeroTel" name="numeroTel" value="<?php echo $contact->getNumeroTel(); ?>">
+
+    <button type="submit">Mettre à jour</button>
+
 </form>
-</body>
-</html>
