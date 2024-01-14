@@ -57,6 +57,16 @@ switch ($page) {
             exit();
         }
         break;
+    case 'educateur':
+        // Vérifier si l'utilisateur est authentifié avant d'afficher la page des éducateurs
+        if (isAuthenticated()) {
+            require './controllers/EducateurController.php'; // Inclure le contrôleur
+        } else {
+            // Si non authentifié, rediriger vers la page de connexion
+            header('Location: /index.php?page=login');
+            exit();
+        }
+        break;
     default:
         // Afficher une page d'erreur PAS ENCORE FAIT
         break;
