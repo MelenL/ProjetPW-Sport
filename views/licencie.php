@@ -21,6 +21,9 @@
     <?php endforeach; ?>
 </ul>
 
+<a href="/index.php?page=licencie&action=export">Exporter les Licenciés (CSV)</a>
+
+
 <h2>Créer un nouveau Licencié</h2>
 <form action="/index.php?page=licencie&action=create" method="post">
     <div class="form-group">
@@ -54,6 +57,17 @@
     </div>
     <button type="submit">Créer Licencié</button>
 </form>
+
+<br>
+
+<form action="/index.php?page=licencie&action=import" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="csvFile">Importer un / des licenciés (fichier CSV) :</label>
+        <input type="file" id="csvFile" name="csvFile" accept=".csv" required>
+    </div>
+    <button type="submit">Importer</button>
+</form>
+
 
 </body>
 
