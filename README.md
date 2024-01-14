@@ -1,6 +1,6 @@
-# ProjetPW-Sport - Partie Frontend
+# MonCoach
 
-## Partie Frontend du projet de site
+**Partie 2:** Symfony
 
- - Fait avec Symfony.
- - Utilisation de tailwindcss pour le style.
+- Style CSS: _Réalisé avec TailWindCSS & Flowbite_
+
