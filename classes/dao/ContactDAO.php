@@ -60,4 +60,16 @@ class ContactDAO {
         $stmt = $this->db->prepare("DELETE FROM contact WHERE id = :id");
         $stmt->execute(['id' => $id]);
     }
+
+    public function createAndGetId(Contact $contact): int {
+        $stmt = $this->db->prepare("INSERT INTO contact (nom, prenom, email, numero_tel) VALUES (:nom, :prenom, :email, :numero_tel)");
+        $stmt->execute([
+            'nom' => $contact->getNom(),
+            'prenom' => $contact->getPrenom(),
+            'email' => $contact->getEmail(),
+            'numero_tel' => $contact->getNumeroTel()
+        ]);
+        return $this->db->lastInsertId();
+    }
+
 }

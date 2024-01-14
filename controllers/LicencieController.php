@@ -32,14 +32,12 @@ switch ($action) {
 
             // Créer un nouveau contact
             $contact = new Contact(null, $nom, $prenom, $email, $numeroTel);
-            $contactDAO->create($contact); // Enregistrez le contact et obtenez son ID
-            $contactId = $contact->getId();
 
-                // Créer un nouveau licencié avec l'ID du contact
-            $licencie = new Licencie(null, $numeroLicence, $nom, $prenom, $categorieId, $contactId);
+            // Créer un nouveau licencié (sans l'ID de contact pour l'instant)
+            $licencie = new Licencie(null, $numeroLicence, $nom, $prenom, $categorieId, null);
 
-            // Enregistrer le nouveau licencié dans la base de données
-            $licencieDAO->create($licencie);
+            // Enregistrer le nouveau licencié et le contact dans la base de données
+            $licencieDAO->create($licencie, $contact);
 
             // Rediriger vers la page des licenciés avec un message de succès
             header('Location: /index.php?page=licencie&success=Le licencié a été créé avec succès');
@@ -47,13 +45,21 @@ switch ($action) {
         }
         break;
 
+
     case 'edit':
         // Gérer la modification d'un licencié ici
         break;
 
     case 'delete':
-        // Gérer la suppression d'un licencié ici
+        if (isset($_GET['id'])) {
+            $licencieId = (int)$_GET['id'];
+            $licencieDAO->delete($licencieId);
+            // Rediriger vers la page des licenciés avec un message de succès
+            header('Location: /index.php?page=licencie&success=Le licencié a été supprimé avec succès');
+            exit();
+        }
         break;
+
 
     default:
         // Afficher la liste des licenciés existants

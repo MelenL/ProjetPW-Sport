@@ -1,11 +1,12 @@
 <?php
 
 require_once 'classes/models/Licencie.php';
+require_once 'classes/dao/ContactDAO.php';
 
 class LicencieDAO {
     private PDO $db;
 
-    // Constructeur
+
     public function __construct(PDO $db) {
         $this->db = $db;
     }
@@ -32,16 +33,25 @@ class LicencieDAO {
     }
 
     // Méthode pour créer un licencié
-    public function create(Licencie $licencie): void {
+    public function create(Licencie $licencie, Contact $contact): void {
+
+        $contactDAO = new ContactDAO($this->db);
+
+        $contactId = $contactDAO->createAndGetId($contact);
+
         $stmt = $this->db->prepare("INSERT INTO licencie (numero_licence, nom, prenom, id_categorie_id, id_contact_id) VALUES (:numero_licence, :nom, :prenom, :categorie_id, :contact_id)");
         $stmt->execute([
             'numero_licence' => $licencie->getNumeroLicence(),
             'nom' => $licencie->getNom(),
             'prenom' => $licencie->getPrenom(),
             'categorie_id' => $licencie->getCategorie(),
-            'contact_id' => $licencie->getContactId()
+            'contact_id' => $contactId
         ]);
+
+        $licencie->setContactId($contactId);
+
     }
+
 
 // Méthode pour mettre à jour un licencié
     public function update(Licencie $licencie): void {
@@ -59,7 +69,19 @@ class LicencieDAO {
 
     // Méthode pour supprimer un licencié
     public function delete(int $id): void {
-        $stmt = $this->db->prepare("DELETE FROM licencie WHERE id = :id");
+        $stmt = $this->db->prepare("SELECT id_contact_id FROM licencie WHERE id = :id");
         $stmt->execute(['id' => $id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row && $row['id_contact_id']) {
+            $contactId = $row['id_contact_id'];
+
+            $stmt = $this->db->prepare("DELETE FROM licencie WHERE id = :id");
+            $stmt->execute(['id' => $id]);
+
+            $stmt = $this->db->prepare("DELETE FROM contact WHERE id = :contactId");
+            $stmt->execute(['contactId' => $contactId]);
+        }
     }
+
 }
