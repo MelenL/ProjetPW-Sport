@@ -1,4 +1,4 @@
-<!-- edit_category.php -->
+<!-- edit_licencie.php -->
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -10,25 +10,12 @@
 <h1>Modifier un Licencie</h1>
 
 <?php
-require_once 'classes/dao/ContactDAO.php';
-require_once 'classes/models/Connexion.php';
-require_once 'classes/dao/CategorieDAO.php';
-
-$connexion = new Connexion();
-$db = $connexion->pdo;
-
 // Vérifier s'il y a des messages d'erreur ou de succès à afficher
 if (isset($_GET['error'])) {
     echo '<p class="error">' . $_GET['error'] . '</p>';
 } elseif (isset($_GET['success'])) {
     echo '<p class="success">' . $_GET['success'] . '</p>';
 }
-
-$categorieDAO = new CategorieDAO($db);
-$categories = $categorieDAO->findAll();
-$contactDAO = new ContactDAO($db);
-$Idcontact = $licencie->getContactId();
-$contact = $contactDAO->findById($Idcontact);
 ?>
 
 <form action="/index.php?page=licencie&action=edit" method="post">
@@ -52,7 +39,6 @@ $contact = $contactDAO->findById($Idcontact);
         <?php endforeach; ?>
     </select>
 
-
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" value="<?php echo $contact->getEmail(); ?>">
 
@@ -60,5 +46,6 @@ $contact = $contactDAO->findById($Idcontact);
     <input type="text" id="numeroTel" name="numeroTel" value="<?php echo $contact->getNumeroTel(); ?>">
 
     <button type="submit">Mettre à jour</button>
-
 </form>
+</body>
+</html>

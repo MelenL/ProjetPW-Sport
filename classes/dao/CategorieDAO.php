@@ -2,6 +2,7 @@
 
 // Inclure le fichier Categorie.php
 require_once 'classes/models/Categorie.php';
+require_once 'LicencieDAO.php';
 
 class CategorieDAO {
     private PDO $db;
@@ -55,18 +56,22 @@ class CategorieDAO {
 
     // Méthode pour supprimer une catégorie et les licenciés associés
     public function delete(int $id): void {
+        // Commencez par récupérer les licenciés associés à cette catégorie
         $stmt = $this->db->prepare("SELECT id FROM licencie WHERE id_categorie_id = :categorie_id");
         $stmt->execute(['categorie_id' => $id]);
 
+        // Créez une instance de LicencieDAO
+        $licencieDAO = new LicencieDAO($this->db);
+
+        // Parcourez les licenciés et utilisez LicencieDAO pour les supprimer un par un
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $licencieId = $row['id'];
 
-            // Supprimez le licencié
-            $stmt = $this->db->prepare("DELETE FROM licencie WHERE id = :licencie_id");
-            $stmt->execute(['licencie_id' => $licencieId]);
-
+            // Utilisez LicencieDAO pour supprimer le licencié
+            $licencieDAO->deleteWithEducateur($licencieId);
         }
 
+        // Ensuite, supprimez la catégorie elle-même
         $stmt = $this->db->prepare("DELETE FROM categorie WHERE id = :id");
         $stmt->execute(['id' => $id]);
     }

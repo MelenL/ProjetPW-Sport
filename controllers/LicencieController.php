@@ -52,10 +52,19 @@ switch ($action) {
             $licencie = $licencieDAO->findById($licencieId);
 
             if ($licencie) {
+                // Récupérer les catégories et le contact associé ici
+                $connexion = new Connexion();
+                $db = $connexion->pdo;
+                $categorieDAO = new CategorieDAO($db);
+                $categories = $categorieDAO->findAll();
+                $contactDAO = new ContactDAO($db);
+                $Idcontact = $licencie->getContactId();
+                $contact = $contactDAO->findById($Idcontact);
+
                 // Afficher le formulaire de modification pré-rempli
                 require 'views/edit_licencie.php';
             } else {
-                // Rediriger avec un message d'erreur si la catégorie n'existe pas
+                // Rediriger avec un message d'erreur si le licencie n'existe pas
                 header('Location: /index.php?page=licencie&error=Licencie non trouvé');
                 exit();
             }
