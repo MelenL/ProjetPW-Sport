@@ -109,6 +109,7 @@ class LicencieDAO {
             // Supprimer le contact
             $stmt = $this->db->prepare("DELETE FROM contact WHERE id = :contactId");
             $stmt->execute(['contactId' => $contactId]);
+
         }
     }
 
